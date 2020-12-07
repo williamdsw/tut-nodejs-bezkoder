@@ -1,0 +1,34 @@
+{
+  "name": "tut-nodejs-bezkoder",
+  "version": "1.0.0",
+  "description": "Node.js Rest API with Express, Sequelize & MySQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/williamdsw/tut-nodejs-bezkoder.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "sequelize",
+    "mysql",
+    "rest",
+    "api"
+  ],
+  "author": "williamdsw",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/williamdsw/tut-nodejs-bezkoder/issues"
+  },
+  "homepage": "https://github.com/williamdsw/tut-nodejs-bezkoder#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5"
+  }
+}
