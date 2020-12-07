@@ -1,7 +1,7 @@
 
 const database = require('../models');
 const Tutorial = database.tutorials;
-const Op = database.sequelize.Op;
+const Op = database.Sequelize.Op;
 
 // new tutorial
 exports.create = (request, response) => {
@@ -38,7 +38,7 @@ exports.update = (request, response) => {
         }
         else {
             response.send({
-                message: `Cannot update tutorial with id ${id}. Maybe tutorial was not found request.body is empty!`
+                message: `Cannot update tutorial with id ${id}. Maybe tutorial was not found or request.body is empty!`
             });
         }
     }).catch(error => { 
@@ -58,7 +58,7 @@ exports.deleteById = (request, response) => {
         }
         else {
             response.send({
-                message: `Cannot delete tutorial with id ${id}. Maybe tutorial was not found request.body is empty!`
+                message: `Cannot delete tutorial with id ${id}. Maybe tutorial was not found or request.body is empty!`
             });
         }
     }).catch(error => { 
@@ -71,7 +71,12 @@ exports.deleteById = (request, response) => {
 // delete all tutorials
 exports.deleteAll = (request, response) => {
     Tutorial.destroy({ where: {}, truncate: false }).then(affectedRows => {
-        response.send({ message: `${affectedRows} tutorials were deleted successfully!` });
+        if (affectedRows !== 0) {
+            response.send({ message: `${affectedRows} tutorials were deleted successfully!` });
+        }
+        else {
+            response.send({ message: `None tutorial were deleted!` });
+        }
     }).catch(error => {
         response.status(500).send({
             message: error.message || 'Some error occurred while removing all tutorials.'
@@ -93,7 +98,7 @@ exports.findAll = (request, response) => {
 
 // find all published tutorials
 exports.findAllPublished = (request, response) => {
-    Tutorial.findAll({ where: { published: true } }).then(data => response.data).catch(error => {
+    Tutorial.findAll({ where: { published: true } }).then(data => response.send(data)).catch(error => {
         response.status(500).send({
             message: error.message || 'Some error occurred while retrieving tutorials.'
        })
