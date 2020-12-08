@@ -8,7 +8,7 @@ const database = require('./app/models');
 const app = express();
 
 let corsOptions = {
-    origin: 'http://localhost:8082',
+    origin: 'https://williamdsw.github.io/tut-vue-ts-crud-bezkoder/',
 };
 
 app.use(cors(corsOptions));
