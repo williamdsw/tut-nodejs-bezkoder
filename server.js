@@ -2,13 +2,17 @@
 const express = require('express');         // Builds the Rest API
 const bodyParser = require('body-parser');  // Parses the request and create the body request
 const cors = require('cors');               // Middleware to enable CORS with options
-const database = require('./app/models');
 const routes = require('./app/routes/tutorial.routes');
+const database = require('./app/models');
 
 const app = express();
 
 let corsOptions = {
-    origin: 'http://localhost:8082'
+    origin: [
+        'http://localhost:8082',
+        'https://williamdsw/tut-vue-ts-crud-bezkoder/'
+    ],
+    default: 'http://localhost:8082'
 };
 
 app.use(cors(corsOptions));
@@ -21,6 +25,15 @@ database.sequelize.sync({ force: true }).then(() => {
 
 app.get('/', (request, response) => { 
     response.json({ message: 'Welcome to williamdsw application!' });
+});
+
+app.all('*', (request, response, next) => {
+    const header = request.header('origin').toLowerCase();
+    const indexOf = corsOptions.origin.indexOf(header);
+    const origin = (indexOf > -1 ? request.headers.origin : corsOptions.default);
+    response.header('Access-Control-Allow-Origin', origin);
+    response.header('Access-Control-Allow-Headers', 'Origin, X-Request-With, Content-Type, Accep');
+    next();
 });
 
 routes(app);
