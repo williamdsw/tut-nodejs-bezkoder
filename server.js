@@ -8,7 +8,16 @@ const database = require('./app/models');
 const app = express();
 
 let corsOptions = {
-    origin: 'https://williamdsw.github.io/tut-vue-ts-crud-bezkoder/*',
+    origin: [
+        'http://localhost:8080',
+        'http://localhost:8081',
+        'http://localhost:8082',
+        'https://williamdsw.github.io',
+        'https://williamdsw.github.io/tut-vue-ts-crud-bezkoder',
+        'https://williamdsw.github.io/tut-vue-ts-crud-bezkoder/',
+        'https://williamdsw.github.io/tut-vue-ts-crud-bezkoder/*',
+    ],
+    default: 'http://localhost:8080'
 };
 
 app.use(cors(corsOptions));
@@ -23,14 +32,17 @@ app.get('/', (request, response) => {
     response.json({ message: 'Welcome to williamdsw application!' });
 });
 
-// app.all('*', (request, response, next) => {
-//     const header = request.header('origin').toLowerCase();
-//     const indexOf = corsOptions.origin.indexOf(header);
-//     const origin = (indexOf > -1 ? request.headers.origin : corsOptions.default);
-//     response.header('Access-Control-Allow-Origin', origin);
-//     response.header('Access-Control-Allow-Headers', 'Origin, X-Request-With, Content-Type, Accep');
-//     next();
-// });
+app.all('*', (request, response, next) => {
+    const header = request.header('origin').toLowerCase();
+    console.log('header', header);
+    const indexOf = corsOptions.origin.indexOf(header);
+    console.log('indexof header', indexOf);
+    const origin = (indexOf > -1 ? request.headers.origin : corsOptions.default);
+    console.log('origin');
+    response.header('Access-Control-Allow-Origin', origin);
+    response.header('Access-Control-Allow-Headers', 'Origin, X-Request-With, Content-Type, Accep');
+    next();
+});
 
 routes(app);
 
