@@ -17,7 +17,7 @@ let corsOptions = {
         'https://williamdsw.github.io/tut-vue-ts-crud-bezkoder/',
         'https://williamdsw.github.io/tut-vue-ts-crud-bezkoder/*',
     ],
-    default: 'http://localhost:8080'
+    default: 'http://localhost:8080',
 };
 
 app.use(cors(corsOptions));
