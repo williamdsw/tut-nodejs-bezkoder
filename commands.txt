@@ -3,3 +3,5 @@
 npm init
 npm install express sequelize mysql2 body-parser cors --save
 node index.js
+heroku login
+heroku config | grep CLEARDB_DATABASE_URL
